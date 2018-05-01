@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Public Chat</title>
+    <link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/storage/theme/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/storage/theme/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap-sweetalert/dist/sweetalert.css">
+    
+  </head>
+  <body class="horizontal-navigation">
+    
+    <header class="site-header">
+      <div class="container-fluid">
+          <a href="/" class="site-logo">
+              Home
+          </a>
+          
+      </div>
+    </header>
+
+    <div class="mobile-menu-left-overlay"></div>
+  
+    <div class="page-content">
+      <div class="container-fluid">
+
+        <div class="box-typical chat-container">
+          
+          <section class="chat-area">
+            <div class="chat-area-public">
+              <div class="chat-area-header">
+                 <header class="box-typical-header">
+                  <div class="tbl-row">
+                    <div class="tbl-cell tbl-cell-title">
+                      <h3>Public Chat</h3>
+                    </div>
+                  </div>
+                </header>
+              </div>
+
+              <div class="chat-dialog-area scrollable-block" >
+                  <div class="messenger-dialog-area" id="messages_list">
+                      
+                  </div>
+              </div>
+
+              <div class="chat-area-bottom">
+                <form class="write-message">
+                  <div class="avatar">
+                    <img src="/storage/theme/img/avatar-1-64.png" alt="">
+                  </div>
+                  <div class="form-group">
+                    <textarea rows="2" id="m" class="form-control" placeholder="Type a message"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-rounded float-left">Send</button>
+                  <button type="reset" class="btn btn-rounded btn-default float-left">Clear</button>
+                </form>
+              </div>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/tether/dist/js/tether.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/bootstrap-sweetalert/dist/sweetalert.js"></script>
+    
+    <script>
+    $(function () {
+
+      // Submit form on ctrl+enter key
+      $('#m').keydown(function (e) {
+        if (e.ctrlKey && e.keyCode == 13) {
+          $('form').submit();
+        }
+      });
+
+      // Onload focus on textbox
+      $("#m").focus();
+
+      var socket = io();
+      var username = '';
+
+      // Submit form
+      $('form').submit(function(){
+
+        var postted_msg = $('#m').val();
+
+        if(username == ''){
+
+          // Popup for name
+          swal({
+            title: "Please write your name!",
+            text: "",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "Write your name here"
+          }, function (inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+              swal.showInputError("Please write your name!");
+              return false;
+            }
+
+            if(inputValue != ''){
+              username = inputValue;
+              swal("Welcome!", inputValue, "success");
+
+              if( postted_msg != ""){
+                socket.emit('chat message', '<b>  '+username+'</b><br><div>'+postted_msg+'</div>');
+                $('#m').val('');
+              }
+              return false;  
+            }
+              
+          });
+          return false;
+
+        } else {
+
+          if( postted_msg != ""){
+            socket.emit('chat message', '<b>  '+username+'</b><br><div>'+postted_msg+'</div>');
+            $('#m').val('');
+            $("#m").focus();
+            $(".scrollable-block").animate({ scrollTop: $('.scrollable-block').prop("scrollHeight")}, 100);
+          }
+          
+          return false;
+        }
+        
+      });
+
+      socket.on('chat message', function(msg,posted_time){
+        if(msg != ''){
+
+          $('#messages_list').append('<div class="messenger-message-container"><div class="avatar"><img src="/storage/theme/img/avatar-1-64.png"></div><div class="messages"><ul><li><div class="message"><div><pre>'+msg+'</pre></div></div><div class="time-ago">'+posted_time+'</div></li></ul></div></div>');
+
+          $(".scrollable-block").animate({ scrollTop: $('.scrollable-block').prop("scrollHeight")}, 100);
+        }
+      });
+    
+    });
+  </script>
+
+
+  </body>
+</html>

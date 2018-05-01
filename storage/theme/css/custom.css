@@ -1,0 +1,26 @@
+.chat-area-public .scrollable-block {
+	height: 500px;
+}
+
+.horizontal-navigation .page-content {
+	padding-top: 107px;
+}
+
+.messages .message div pre {
+	/*color: #343434;*/
+	font-family: 'Proxima Nova',sans-serif;
+	line-height: 1.4;
+	text-rendering: optimizeLegibility;
+}
+
+.messages .message .discontinue pre {
+	color: #f92932;
+}
+
+.bg-blue .messages .message div {
+	background: #00a8ff;
+}
+
+.messenger-message-container .messages .message div {
+	min-width: 400px;
+}
