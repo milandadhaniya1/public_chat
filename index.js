@@ -3,7 +3,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var domain = '192.168.3.10';
+var domain = 'localhost';
 var domain_port = 3000;
 
 const TEMPLATEURL = __dirname+"/storage/template"
