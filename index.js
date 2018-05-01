@@ -3,7 +3,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var domain = 'localhost';
+var domain = '192.168.3.10';
 var domain_port = 3000;
 
 const TEMPLATEURL = __dirname + "/storage/template"
@@ -34,6 +34,33 @@ io.on('connection', function(socket) {
         var d = new Date();
         var h = d.getHours();
         var m = d.getMinutes();
+
+        // Smiley
+        var smiley_arr = new Array();
+        smiley_arr.push([":)","slightly-smiling-face_1f642.png"]);
+        smiley_arr.push([":(","slightly-frowning-face_1f641.png"]);
+        smiley_arr.push([":P","face-with-stuck-out-tongue-and-tightly-closed-eyes_1f61d.png"]);
+        smiley_arr.push([":D","grinning-face-with-smiling-eyes_1f601.png"]);
+        smiley_arr.push([":O","face-with-open-mouth_1f62e.png"]);
+        smiley_arr.push([";)","winking-face_1f609.png"]);
+        smiley_arr.push(["B-)","smiling-face-with-sunglasses_1f60e.png"]);
+        smiley_arr.push([">:(","persevering-face_1f623.png"]);
+        smiley_arr.push([":/","pouting-face_1f621.png"]);
+        smiley_arr.push([":'(","crying-face_1f622.png"]);
+        smiley_arr.push(["3:)","smiling-face-with-horns_1f608.png"]);
+        smiley_arr.push([":*","kissing-face-with-smiling-eyes_1f619.png"]);
+        smiley_arr.push(["<3","black-heart-suit_2665.png"]);
+        smiley_arr.push(["^_^","smiling-face-with-smiling-eyes_1f60a.png"]);
+        smiley_arr.push(["-_-","neutral-face_1f610.png"]);
+        smiley_arr.push([">:O","persevering-face_1f623.png"]);
+        smiley_arr.push(["(y)","thumbs-up-sign_emoji-modifier-fitzpatrick-type-1-2_1f44d-1f3fb_1f3fb.png"]);
+        smiley_arr.push([":poop:","pile-of-poo_1f4a9.png"]);
+
+        smiley_arr.forEach(function(key){
+          msg = msg.replace(key[0], "<img src='/storage/theme/img/smiley/"+key[1]+"' class='smiley_txt'></img>");
+        });
+
+        
         io.emit('chat message', msg, h + ':' + m);
     });
 

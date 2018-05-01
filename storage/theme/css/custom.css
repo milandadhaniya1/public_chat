@@ -24,3 +24,7 @@
 .messenger-message-container .messages .message div {
 	min-width: 400px;
 }
+
+.smiley_txt {
+	height: 30px;
+}
