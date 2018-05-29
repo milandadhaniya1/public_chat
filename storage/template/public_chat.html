@@ -3,6 +3,7 @@
 
 <head>
     <title>Public Chat</title>
+    <link rel="icon" href="/storage/theme/img/favicon.ico" type="image/gif" sizes="16x16">
     <link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="/storage/theme/css/main.css">
     <link rel="stylesheet" type="text/css" href="/storage/theme/css/custom.css">
@@ -38,9 +39,39 @@
                         </div>
                         <div class="chat-area-bottom">
                             <form class="write-message">
-                                <div class="avatar">
-                                    <img src="/storage/theme/img/avatar-1-64.png" alt="">
+                                <div class="smiley_txt_popup" style="display: none;">
+                                <table>
+                                    <tr>
+                                        <td class=":)"><img src='/storage/theme/img/smiley/slightly-smiling-face_1f642.png' class='smiley_txt'></img></td>
+                                        <td class=":("><img src='/storage/theme/img/smiley/slightly-frowning-face_1f641.png' class='smiley_txt'></img></td>
+                                        <td class=":P"><img src='/storage/theme/img/smiley/face-with-stuck-out-tongue-and-tightly-closed-eyes_1f61d.png' class='smiley_txt'></img></td>
+                                        <td class=":D"><img src='/storage/theme/img/smiley/grinning-face-with-smiling-eyes_1f601.png' class='smiley_txt'></img></td>
+                                        <td class=":O"><img src='/storage/theme/img/smiley/face-with-open-mouth_1f62e.png' class='smiley_txt'></img></td>
+                                        <td class=";)"><img src='/storage/theme/img/smiley/winking-face_1f609.png' class='smiley_txt'></img></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="B-)"><img src='/storage/theme/img/smiley/smiling-face-with-sunglasses_1f60e.png' class='smiley_txt'></img></td>
+                                        <td class=">:("><img src='/storage/theme/img/smiley/persevering-face_1f623.png' class='smiley_txt'></img></td>
+                                        <td class=":/"><img src='/storage/theme/img/smiley/pouting-face_1f621.png' class='smiley_txt'></img></td>
+                                        <td class=":'("><img src='/storage/theme/img/smiley/crying-face_1f622.png' class='smiley_txt'></img></td>
+                                        <td class="3:)"><img src='/storage/theme/img/smiley/smiling-face-with-horns_1f608.png' class='smiley_txt'></img></td>
+                                        <td class=":*"><img src='/storage/theme/img/smiley/kissing-face-with-smiling-eyes_1f619.png' class='smiley_txt'></img></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="<3"><img src='/storage/theme/img/smiley/black-heart-suit_2665.png' class='smiley_txt'></img></td>
+                                        <td class="^_^"><img src='/storage/theme/img/smiley/smiling-face-with-smiling-eyes_1f60a.png' class='smiley_txt'></img></td>
+                                        <td class="-_-"><img src='/storage/theme/img/smiley/neutral-face_1f610.png' class='smiley_txt'></img></td>
+                                        <td class=">:O"><img src='/storage/theme/img/smiley/persevering-face_1f623.png' class='smiley_txt'></img></td>
+                                        <td class="(y)"><img src='/storage/theme/img/smiley/thumbs-up-sign_emoji-modifier-fitzpatrick-type-1-2_1f44d-1f3fb_1f3fb.png' class='smiley_txt'></img></td>
+                                        <td class=":poop:"><img src='/storage/theme/img/smiley/pile-of-poo_1f4a9.png' class='smiley_txt'></img></td>
+                                    </tr>
+
+                                </table>
                                 </div>
+                                <div class="avatar" id="smiley_selector">
+                                    <img src="/storage/theme/img/smile.png" alt="">
+                                </div>
+                                
                                 <div class="form-group">
                                     <textarea rows="2" id="m" class="form-control" placeholder="Type a message"></textarea>
                                 </div>
@@ -74,7 +105,9 @@
         });
 
         // Onload focus on textbox
-        $("#m").focus();
+        $("#m").focus(function() {
+            $(".smiley_txt_popup").slideUp('slow');
+        });
 
         var socket = io();
         var username = '';
@@ -165,6 +198,21 @@
             }
         });
 
+        // Smiley Selector
+
+        $('#smiley_selector').hover(function (){
+          $(".smiley_txt_popup").slideDown('slow');  
+        });
+
+        $('.smiley_txt_popup').hover(function (){},
+        function () {
+          $(".smiley_txt_popup").slideUp('slow');
+        });
+
+        $('.smiley_txt_popup td').click(function (){
+          $('#m').val($('#m').val() + ' '+$(this).attr("class")+' ');
+        });
+        
     });
     </script>
 </body>
