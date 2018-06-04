@@ -6,6 +6,7 @@
 	padding-top: 107px;
 }
 
+/** TXT MSG **/
 .messages .message div pre {
 	/*color: #343434;*/
 	font-family: 'Proxima Nova',sans-serif;
@@ -21,10 +22,24 @@
 	background: #00a8ff;
 }
 
-.messenger-message-container .messages .message div {
+.messenger-message-container .messages .message .txt {
 	min-width: 400px;
 }
 
+.messenger-message-container .messages .message div img{
+	max-height: 120px;
+	max-width: 200px;
+}
+
+
+/** IMAGE MSG **/
+
+.messenger-message-container .messages .message .image {
+	min-width: 150px;
+}
+
+
+/** SMILEY **/
 .smiley_txt {
 	height: 30px;
 	padding: 2px;
@@ -57,4 +72,23 @@
 	height: 50px;
 	width: 30px;
 	text-align: center;
+}
+
+
+/** ATTACHMENT **/
+.attachment{
+	top: 35px;
+    left: 0px;
+    height: 32px; 
+	width: 32px;
+    position: absolute;
+}
+
+.attachment img {
+	height: 30px;
+}
+
+.attachment > input
+{
+    display: none;
 }

@@ -20,7 +20,7 @@ smiley_arr.push([":D","grinning-face-with-smiling-eyes_1f601.png"]);
 smiley_arr.push([":O","face-with-open-mouth_1f62e.png"]);
 smiley_arr.push([";)","winking-face_1f609.png"]);
 smiley_arr.push(["B-)","smiling-face-with-sunglasses_1f60e.png"]);
-smiley_arr.push([":/","pouting-face_1f621.png"]);
+smiley_arr.push([":l","pouting-face_1f621.png"]);
 smiley_arr.push([":'(","crying-face_1f622.png"]);
 smiley_arr.push([":*","kissing-face-with-smiling-eyes_1f619.png"]);
 smiley_arr.push(["<3","black-heart-suit_2665.png"]);
@@ -55,7 +55,9 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 io.on('connection', function(socket) {
-    socket.on('chat message', function(msg) {
+    
+    // Message
+    socket.on('chat message', function(user,msg) {
         var d = new Date();
         var h = d.getHours();
         var m = d.getMinutes();
@@ -64,7 +66,16 @@ io.on('connection', function(socket) {
           msg = msg.replaceAll(key[0], "<img src='/storage/theme/img/smiley/"+key[1]+"' class='smiley_txt'></img>");
         });
 
-        io.emit('chat message', msg, h + ':' + m);
+        io.emit('chat message', user, msg, h + ':' + m);
+    });
+
+    // Image
+    socket.on('uploaded_image', function(user,image) {
+        var d = new Date();
+        var h = d.getHours();
+        var m = d.getMinutes();
+
+        io.emit('uploaded_image', user, { image: true, buffer: image.toString('base64') }, h + ':' + m);
     });
 
     socket.on('disconnect', function() {
@@ -73,5 +84,5 @@ io.on('connection', function(socket) {
 });
 
 http.listen(domain_port, domain, function() {
-    console.log('Service Started.');
+    console.log('Service Started On http://'+domain+':'+domain_port);
 });

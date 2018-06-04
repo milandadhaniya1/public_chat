@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "my first socket.io app",
   "dependencies": {
+    "@fancyapps/fancybox": "^3.3.5",
     "bootstrap": "^4.1.0",
     "bootstrap-sweetalert": "^1.0.1",
     "express": "^4.15.2",
