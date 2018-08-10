@@ -9,9 +9,11 @@
     <link rel="stylesheet" type="text/css" href="/storage/theme/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap-sweetalert/dist/sweetalert.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css">
+    
 </head>
 
 <body class="horizontal-navigation">
+
     <header class="site-header">
         <div class="container-fluid">
             <a href="/" class="site-logo">
@@ -98,15 +100,19 @@
             </div>
         </div>
     </div>
+
+    <div id="cover" style="display: none;"></div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/tether/dist/js/tether.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/node_modules/bootstrap-sweetalert/dist/sweetalert.js"></script>
     <script src="/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
+
     <script>
     $(function() {
-
+        
         // Submit form on enter key, new line on ctrl+enter
         $('#m').keydown(function(e) {
             if (e.ctrlKey && e.keyCode == 13) {
@@ -261,11 +267,10 @@
                 return false;
             } else {
 
-
                 var fileName = e.target.files[0];
-            
+                
                 if(fileName.type.toLowerCase() == 'image/png' || fileName.type.toLowerCase() == 'image/jpg' || fileName.type.toLowerCase() == 'image/jpeg'){
-
+                    
                     socket.emit('uploaded_image', username, fileName,fileName.type.toLowerCase());
 
                 } else {
@@ -290,10 +295,24 @@
 
         $(document).on('click', '.download', function () {
             var image_to_download = $(this).parent().parent().parent().find('.message').find('a.image_link').attr('href');
-            // window.open(image_to_download);
             
-            
+            var link = document.createElement('a');
+            link.href = image_to_download;
+            link.target = '_blank';
 
+            if(image_to_download.indexOf("image/png") != '-1'){
+                link.download = Math.random().toString(36).slice(2)+'.png';
+                link.click();
+            } else if (image_to_download.indexOf("image/jpg") != '-1'){
+                link.download = Math.random().toString(36).slice(2)+'.jpg';
+                link.click();
+            } else if (image_to_download.indexOf("image/jpeg") != '-1'){
+                link.download = Math.random().toString(36).slice(2)+'.jpeg';
+                link.click();
+            } else {
+                alert('File format not supported to download');
+            }
+        
         });
 
         // Smiley Selector

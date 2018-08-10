@@ -97,3 +97,11 @@
 	cursor: pointer;
 	font-size : 2em;
 }
+
+#cover {
+    background: url("../img/ajaxloader.gif") no-repeat scroll center center #FFF;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 3000;
+}
