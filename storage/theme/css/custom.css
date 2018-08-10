@@ -92,3 +92,8 @@
 {
     display: none;
 }
+
+.download {
+	cursor: pointer;
+	font-size : 2em;
+}

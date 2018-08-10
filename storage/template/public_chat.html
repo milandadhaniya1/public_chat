@@ -266,7 +266,7 @@
             
                 if(fileName.type.toLowerCase() == 'image/png' || fileName.type.toLowerCase() == 'image/jpg' || fileName.type.toLowerCase() == 'image/jpeg'){
 
-                    socket.emit('uploaded_image', username, fileName);
+                    socket.emit('uploaded_image', username, fileName,fileName.type.toLowerCase());
 
                 } else {
                     alert("Please select only images.");
@@ -280,7 +280,7 @@
         // Image to all receivers
         socket.on("uploaded_image", function(user, info, posted_time) {
 
-          $('#messages_list').append('<div class="messenger-message-container"><div class="avatar"><img src="/storage/theme/img/avatar-1-64.png"></div><div class="messages"><ul><li><div class="message"><div class="image"><pre><b>  ' + user + '</b></pre><br><center><a href="data:image/jpeg;base64,'+info.buffer+'" data-fancybox="images" class="image_link"><img src="data:image/jpeg;base64,'+info.buffer+'" height="120"></a></center></div></div><div class="time-ago">' + posted_time + '</div></li></ul></div></div>');
+          $('#messages_list').append('<div class="messenger-message-container"><div class="avatar"><img src="/storage/theme/img/avatar-1-64.png"></div><div class="messages"><ul><li><div class="message"><div class="image"><pre><b>  ' + user + '</b></pre><br><center><a href="'+info.buffer+'" data-fancybox="images" class="image_link"><img src="'+info.buffer+'" height="120"></a></center></div></div><div class="time-ago">' + posted_time + '<br><center><i class="fa fa-arrow-circle-down download" aria-hidden="true" title="Download Image"></i></center></div></li></ul></div></div>');
 
             $(".scrollable-block").animate({
                 scrollTop: $('.scrollable-block').prop("scrollHeight")
@@ -288,7 +288,13 @@
 
         });
 
-        
+        $(document).on('click', '.download', function () {
+            var image_to_download = $(this).parent().parent().parent().find('.message').find('a.image_link').attr('href');
+            // window.open(image_to_download);
+            
+            
+
+        });
 
         // Smiley Selector
 
@@ -314,8 +320,9 @@
           // Hide smiley selector on message area click
           $(".smiley_txt_popup").slideUp('slow');
         });
-        
+
     });
+
     </script>
 </body>
 

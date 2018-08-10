@@ -70,17 +70,28 @@ io.on('connection', function(socket) {
     });
 
     // Image
-    socket.on('uploaded_image', function(user,image) {
+    socket.on('uploaded_image', function(user,image,image_type) {
         var d = new Date();
         var h = d.getHours();
         var m = d.getMinutes();
 
-        io.emit('uploaded_image', user, { image: true, buffer: image.toString('base64') }, h + ':' + m);
+        if(image_type == 'image/png' || image_type == 'image/jpg' || image_type == 'image/jpeg'){
+
+           io.emit('uploaded_image', user, { image: true, buffer: 'data:'+image_type+';base64,'+image.toString('base64') }, h + ':' + m);
+           
+        }
+
     });
 
     socket.on('disconnect', function() {
         io.emit('disconnect', 'User Disconnected');
     });
+});
+
+app.use(function(req,res,next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 http.listen(domain_port, domain, function() {
