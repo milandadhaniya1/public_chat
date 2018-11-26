@@ -209,6 +209,16 @@
         });
 
         // Text message to all recevers
+        // socket.on('chat message', function(user, msg) {
+        //     if (msg != '') {
+        //         posted_time = '';
+        //         $('#messages_list').append('<div class="messenger-message-container"><div class="avatar"><img src="/storage/theme/img/avatar-1-64.png"></div><div class="messages"><ul><li><div class="message"><div class="txt"><pre><b>  ' + user + '</b><br><div>' + msg + '</div></pre></div></div><div class="time-ago">' + posted_time + '</div></li></ul></div></div>');
+
+        //         $(".scrollable-block").animate({
+        //             scrollTop: $('.scrollable-block').prop("scrollHeight")
+        //         }, 100);
+        //     }
+        // });
         socket.on('chat message', function(user, msg, posted_time) {
             if (msg != '') {
 

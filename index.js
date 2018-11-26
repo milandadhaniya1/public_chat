@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 
 var domain = '192.168.3.10';
 var domain_port = 3000;
+var connectCounter = 0;
 
 const TEMPLATEURL = __dirname + "/storage/template"
 
@@ -54,10 +55,24 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.split(search).join(replacement);
 };
 
+// For application testing - remove it
+io.on('connect', function(socket) {
+    console.log('New connection');
+});
+
+
 io.on('connection', function(socket) {
     
+    connectCounter++; 
+    console.log('User connected :'+ connectCounter);
+
+    socket.on('message', function (message) {
+      console.log(`Received message: ${message}`);
+    });
+
     // Message
     socket.on('chat message', function(user,msg) {
+        
         var d = new Date();
         var h = d.getHours();
         var m = d.getMinutes();
@@ -67,6 +82,7 @@ io.on('connection', function(socket) {
         });
 
         io.emit('chat message', user, msg, h + ':' + m);
+        // io.emit('chat message', user, msg);
     });
 
     // Image
